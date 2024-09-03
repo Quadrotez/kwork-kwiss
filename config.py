@@ -1,9 +1,12 @@
+import os
 # Настройки конфига
 config_path = 'config.ini'
 
 encoding = 'UTF-8'
 
 sessions_path = 'sessions'
+
+tg_sess_path = os.path.join(sessions_path, 'tg_sess.session')
 
 
 # Тексты

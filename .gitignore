@@ -1,3 +1,6 @@
 __pycache__
 functions/__pycache__
 .venv
+sessions/*
+test.py
+config.ini
