@@ -1,7 +1,3 @@
-import json
-
-import vk
-
 from functions import *
 from pyrogram import filters, types, Client
 import vk_api
@@ -29,7 +25,5 @@ async def main_handler(client: Client, message: types.Message):
         vk_api_client.method("messages.send", {"user_id": vk_chat_id, "random_id": 0,
                                                "message": msg})
 
-    print('da')
-
-print('Начало работы...')
+print('Начало работы')
 app.run()
