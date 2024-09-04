@@ -1,2 +1,4 @@
 pyrogram==2.0.106
 tgcrypto==1.2.5
+ok_api==1.0.1
+vk_api==11.9.9

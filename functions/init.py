@@ -27,6 +27,8 @@ def config():
         l_config['GENERAL']['API_ID'] = input('API_ID: ')
         l_config['GENERAL']['API_HASH'] = input('API_HASH: ')
         l_config['GENERAL']['CHANNEL_CHECK'] = input('Канал отслеживания (Телеграм): ')
+        l_config['GENERAL']['VK_TOKEN'] = input('VK ACCESS TOKEN: ')
+        l_config['GENERAL']['VK_FORWARDS_IDES'] = ''
         save(l_config)
         sys.exit()
 
