@@ -7,4 +7,5 @@
 <li>API_HASH - API_HASH Telegram</li>
 <li>CHANNEL_CHECK - Канал, из которого будет вестись пересылка</li>
 <li>VK_TOKEN - Access token VK</li>
+<li>VK_FORWARD_IDES - Айди </li>
 <li></li>

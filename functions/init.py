@@ -7,6 +7,7 @@ from pyrogram import Client, types
 from pyrogram.errors import exceptions
 
 os.makedirs(sessions_path, exist_ok=True)
+os.makedirs(temp_path, exist_ok=True)
 
 
 def config():
@@ -29,6 +30,7 @@ def config():
         l_config['GENERAL']['CHANNEL_CHECK'] = input('Канал отслеживания (Телеграм): ')
         l_config['GENERAL']['VK_TOKEN'] = input('VK ACCESS TOKEN: ')
         l_config['GENERAL']['VK_FORWARDS_IDES'] = ''
+        l_config['GENERAL']['TG_FORWARDS_IDES'] = ''
         save(l_config)
         sys.exit()
 
