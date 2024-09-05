@@ -1,5 +1,5 @@
 import time
-
+import asyncio
 import requests
 import vk_api
 from pyrogram import types, Client
@@ -25,18 +25,21 @@ async def main_handler(client: Client, message: types.Message):
 
     api = vk_api_client.get_api()
 
-    if message.media_group_id:
+    if message.media_group_id and message.caption:
         print('Media group')
-        if message.media_group_id:
-            await send.media_group(client, api, message, await client.get_media_group(message.chat.id, message.id))
+
+        await send.vk.media_group(client, api, message, message,
+                                  await client.get_media_group(message.chat.id, message.id))
 
     elif message.photo and message.caption:
         print('Photo')
-        await send.photo(client, api, message)
+        await send.vk.photo(client, api, message)
+        await send.tg.photo(client, message)
 
     elif message.video and message.caption:
         print('Video')
-        await send.video(client, api, message)
+        await send.vk.video(client, api, message)
+        await send.tg.video(client, message)
 
 print('Начало работы')
 app.run()
