@@ -1,9 +1,12 @@
+import json
+
 import requests
 import os
 import time
 from functions import *
 from vk_api import VkUpload
 from config import *
+from pyrogram import Client, types
 
 config = init.config()
 
@@ -17,8 +20,8 @@ async def upload_photo(client, api, message):
     return f'photo{photo_info["owner_id"]}_{photo_info["id"]}'
 
 
-async def photo(client, api, message):
-    for vk_chat_id in config['GENERAL']['VK_FORWARDS_IDES'].split(' '):
+async def photo(client, message, api):
+    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
         api.wall.post(owner_id=f'-{vk_chat_id}', message=message.caption,
                       attachment=await upload_photo(client, api, message))
 
@@ -36,22 +39,35 @@ async def upload_video(client, api, message):
     return f"video{video_info['owner_id']}_{video_info['video_id']}"
 
 
-async def video(client, api, message):
+async def video(client, message, api):
     uploaded_video = await upload_video(client, api, message)
-    for vk_chat_id in config['GENERAL']['VK_FORWARDS_IDES'].split(' '):
+    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
         api.wall.post(owner_id=f'-{vk_chat_id}', from_group=1, message=message.caption,
                       attachments=uploaded_video)
 
 
+async def poll(client: Client, message: types.Message, api):
+    poll_info = api.polls.create(question=message.poll.question,
+                                 add_answers=json.dumps([answer.text for answer in message.poll.options]),
+                                 is_anonymous=int(message.poll.is_anonymous),
+                                 is_multiple=int(message.poll.allows_multiple_answers))
 
-async def media_group(client, api, message, m_group):
+    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
+        api.wall.post(
+            owner_id=f'-{vk_chat_id}',  # ID группы с минусом
+            from_group=1,
+            attachments=f'poll{poll_info["owner_id"]}_{poll_info["id"]}'  # Прикрепляем созданный опрос
+        )
+
+
+async def media_group(client, message, api, m_group):
     attachments = []
     for media in m_group:
-        if type(media.video) is not None:
-            attachments.append(upload_video(client, api, message))
-        if type(media.photo) is not None:
-            attachments.append(upload_photo(api))
+        if media.video:
+            attachments.append(await upload_video(client, api, media))
+        elif media.photo:
+            attachments.append(await upload_photo(client, api, media))
 
-    for vk_chat_id in config['GENERAL']['VK_FORWARDS_IDES'].split(' '):
+    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
         api.wall.post(owner_id=f'-{vk_chat_id}', from_group=1, message=message.caption,
                       attachments=','.join(attachments))
