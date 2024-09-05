@@ -2,5 +2,6 @@ __pycache__
 functions/__pycache__
 .venv
 sessions/*
+temp/*
 test.py
 config.ini
