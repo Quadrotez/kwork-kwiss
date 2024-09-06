@@ -35,24 +35,37 @@ async def main_handler(client: Client, message: types.Message):
 
     # Обработчик Media Group
     if message.media_group_id and message.caption:
-        media_group = await client.get_media_group(message.chat.id, message.id)
-        await send.vk.media_group(client, message, vk_api_client, media_group)
-        await send.tg.media_group(client, vk_api_client, media_group)
+        try:
+            media_group = await client.get_media_group(message.chat.id, message.id)
+            await send.vk.media_group(client, message, vk_api_client, media_group)
+            await send.tg.media_group(client, vk_api_client, media_group)
+        except Exception as e:
+            await client.send_message(config['GENERAL']['ADMIN_CHAT'], f'Произошла ошибка: {e}')
 
     # Обработчик Photo
     elif message.photo and message.caption:
-        await send.vk.photo(client, message, vk_api_client)
-        await send.tg.photo(client, message)
+        try:
+            await send.vk.photo(client, message, vk_api_client)
+            await send.tg.photo(client, message)
+        except Exception as e:
+            await client.send_message(config['GENERAL']['ADMIN_CHAT'], f'Произошла ошибка: {e}')
 
     # Обработчик Video
     elif message.video and message.caption:
-        await send.vk.video(client, message, vk_api_client)
-        await send.tg.video(client, message)
+        try:
+            await send.vk.video(client, message, vk_api_client)
+            await send.tg.video(client, message)
+        except Exception as e:
+            await client.send_message(config['GENERAL']['ADMIN_CHAT'], f'Произошла ошибка: {e}')
 
     # Обработчик Poll
     elif message.poll:
-        await send.vk.poll(client, message, vk_api_client)
-        await send.tg.poll(client, message)
+        try:
+            await send.vk.poll(client, message, vk_api_client)
+            await send.tg.poll(client, message)
+        except Exception as e:
+            await client.send_message(config['GENERAL']['ADMIN_CHAT'], f'Произошла ошибка: {e}')
+
 
 print('Начало работы')
 app.run()
