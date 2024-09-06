@@ -30,6 +30,10 @@ def config():
         l_config['GENERAL']['CHANNEL_CHECK'] = input('Канал отслеживания (Телеграм): ')
         l_config['GENERAL']['VK_TOKEN'] = input('VK ACCESS TOKEN: ')
         l_config['GENERAL']['DELAY'] = input('Задержка после публикации (в секундах): ')
+        white_list = input('Белый список (регулярное выражение. Ничего не вводите, чтобы разрешить всё): ')
+        l_config['GENERAL']['WHITE_LIST'] = white_list if white_list else r'./'
+        black_list = input('Чёрный список (регулярное выражение. Ничего не вводите, чтобы разрешить всё): ')
+        l_config['GENERAL']['BLACK_LIST'] = black_list if black_list else r'^(?!.*)'
         l_config['GENERAL']['VK_FORWARDS_IDES'] = ''
         l_config['GENERAL']['TG_FORWARDS_IDES'] = ''
 

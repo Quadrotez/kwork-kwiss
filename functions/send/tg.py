@@ -3,7 +3,7 @@ import time
 from functions import *
 from vk_api import VkUpload
 from config import *
-from pyrogram import types
+from pyrogram import types, Client
 
 config = init.config()
 
@@ -37,6 +37,17 @@ async def video(client, message):
                                 video=(ptp := (await upload_video(client, message))),
                                 caption=message.caption)
         os.remove(ptp)
+
+
+async def poll(client: Client, message: types.Message):
+    for tg_chat_id in config['GENERAL']['TG_FORWARD_IDES'].split(' '):
+        await client.send_poll(tg_chat_id.replace('https://t.me/', ''),
+                               question=message.poll.question,
+                               is_anonymous=message.poll.is_anonymous,
+                               options=[option.text for option in message.poll.options],
+                               allows_multiple_answers=message.poll.allows_multiple_answers,
+                               correct_option_id=message.poll.correct_option_id,
+                               explanation=message.poll.explanation)
 
 
 async def media_group(client, message, m_group):
