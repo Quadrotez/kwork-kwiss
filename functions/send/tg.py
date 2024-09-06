@@ -17,7 +17,8 @@ async def upload_photo(client, message):
 
 
 async def photo(client, message):
-    for tg_chat_id in config['GENERAL']['TG_FORWARD_IDES'].split(' '):
+    for tg_chat_id in methods.get_chats('tg'):
+        print('dsa')
         await client.send_photo(tg_chat_id.replace('https://t.me/', ''),
                                 photo=(ptp := (await upload_photo(client, message))),
                                 caption=message.caption)
@@ -32,7 +33,7 @@ async def upload_video(client, message):
 
 
 async def video(client, message):
-    for tg_chat_id in config['GENERAL']['TG_FORWARD_IDES'].split(' '):
+    for tg_chat_id in methods.get_chats('tg'):
         await client.send_video(tg_chat_id.replace('https://t.me/', ''),
                                 video=(ptp := (await upload_video(client, message))),
                                 caption=message.caption)

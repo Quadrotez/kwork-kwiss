@@ -1,3 +1,5 @@
+import traceback
+
 import vk_api
 import asyncio
 import re
@@ -48,7 +50,8 @@ async def main_handler(client: Client, message: types.Message):
             await send.vk.photo(client, message, vk_api_client)
             await send.tg.photo(client, message)
         except Exception as e:
-            await client.send_message(config['GENERAL']['ADMIN_CHAT'], f'Произошла ошибка: {e}')
+            await client.send_message(config['GENERAL']['ADMIN_CHAT'],
+                                      f'Произошла ошибка: {traceback.format_exc()}')
 
     # Обработчик Video
     elif message.video and message.caption:

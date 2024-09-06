@@ -1,1 +1,2 @@
-from . import init, send
+from . import init, send, methods
+

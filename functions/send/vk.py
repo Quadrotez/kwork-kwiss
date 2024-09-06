@@ -21,7 +21,7 @@ async def upload_photo(client, api, message):
 
 
 async def photo(client, message, api):
-    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
+    for vk_chat_id in methods.get_chats('vk'):
         api.wall.post(owner_id=f'-{vk_chat_id}', message=message.caption,
                       attachment=await upload_photo(client, api, message))
 
@@ -41,7 +41,7 @@ async def upload_video(client, api, message):
 
 async def video(client, message, api):
     uploaded_video = await upload_video(client, api, message)
-    for vk_chat_id in config['GENERAL']['VK_FORWARD_IDES'].split(' '):
+    for vk_chat_id in methods.get_chats('vk'):
         api.wall.post(owner_id=f'-{vk_chat_id}', from_group=1, message=message.caption,
                       attachments=uploaded_video)
 
