@@ -4,3 +4,4 @@ ok_api==1.0.1
 vk_api==11.9.9
 okpy===1.18.1
 requests==2.22.0
+urllib3==2.2.2

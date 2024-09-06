@@ -36,8 +36,8 @@ def config():
         l_config['GENERAL']['BLACK_LIST'] = black_list if black_list else r'^(?!.*)'
         admin_chat = input('Админ чат (для рассылок ошибок): ')
         l_config['GENERAL']['ADMIN_CHAT'] = admin_chat if admin_chat else 'me'
-        l_config['GENERAL']['VK_FORWARDS_IDES'] = ''
-        l_config['GENERAL']['TG_FORWARDS_IDES'] = ''
+        l_config['GENERAL']['VK_FORWARD_IDES'] = ''
+        l_config['GENERAL']['TG_FORWARD_IDES'] = ''
 
         save(l_config)
         sys.exit()
