@@ -1,10 +1,9 @@
 import traceback
-
 import vk_api
 import asyncio
 import re
-from pyrogram import types, Client
 
+from pyrogram import types, Client
 from functions import *
 
 config = init.config()
@@ -49,7 +48,7 @@ async def main_handler(client: Client, message: types.Message):
         try:
             await send.vk.photo(client, message, vk_api_client)
             await send.tg.photo(client, message)
-        except Exception as e:
+        except:
             await client.send_message(config['GENERAL']['ADMIN_CHAT'],
                                       f'Произошла ошибка: {traceback.format_exc()}')
 
