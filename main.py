@@ -3,7 +3,7 @@ import vk_api
 import asyncio
 import re
 
-from pyrogram import types, Client
+from pyrogram import types, Client, errors
 from functions import *
 
 config = init.config()
@@ -14,7 +14,11 @@ vk_api_session = vk_api.VkApi(token=config['GENERAL']['VK_TOKEN'])
 vk_api_client = vk_api_session.get_api()
 
 with app:
-    channel_check_id = app.get_chat(config['GENERAL']['CHANNEL_CHECK']).id
+    try:
+        channel_check_id = app.get_chat(config['GENERAL']['CHANNEL_CHECK']).id
+    except errors.exceptions.bad_request_400.PeerIdInvalid:
+        channel_check_id = config['GENERAL']['CHANNEL_CHECK']
+
 
 
 @app.on_message()
